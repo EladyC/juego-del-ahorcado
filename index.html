@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--ICON WEB-->
+  <link rel="shortcut icon" href="./assets/svg/logo.svg" type="image/x-icon" />
+
+  <!--CSS STYLES-->
+  <link rel="stylesheet" href="styles.css">
+
+  <!--TAILWIND CSS-->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <title>Juego del ahorcado</title>
+</head>
+
+<body class="h-full p-8">
+  <div class="h-full grid grid-cols-2 gap-5 rounded-xl">
+    <!--HEADER-->
+    <header class="px-10 py-5 col-span-2 flex items-center justify-center bg-white shadow-2xl rounded-xl">
+      <img class="h-14 rounded-lg" src="./assets/img/alura-latam.png">
+      <h1 class="ml-4 font-bold text-4xl underline">Juego del ahorcado</h1>
+    </header>
+
+    <main class="px-10 py-10 col-span-2 bg-white shadow-2xl rounded-xl">
+      <!--MAIN MENU-->
+      <section id="menu" class="menu">
+        <!--TITLE-->
+        <h1 class="font-bold text-4xl underline">Menú principal</h1>
+
+        <!--DESCRIPTION-->
+        <div class="w-full mt-5 grid grid-cols-2 gap-3">
+          <p class="col-span-1 py-2 px-4 bg-slate-100 text-center border border-black shadow-lg rounded-lg">
+            <u class="text-lg font-medium">¡Bienvenido(a) a esta nueva aventura!</u><br>
+            Por órdenes del rey has sido condenado a la horca.<br>
+            <i><u class="font-medium">Misión:</u> Descubrir la palabra secreta para tu liberación.</i><br>
+          </p>
+          <div class="col-span-1 py-2 px-4 bg-slate-100 border border-black shadow-lg rounded-lg">
+            <p class="text-center text-lg font-medium">Instrucciones del juego:</p>
+            <ul>
+              <li>1. Haz clic en <b>"Iniciar juego"</b>.</li>
+              <li>2. Usa las letras de tu teclado virtual para poder escribir una letra.</li>
+              <li>3. Descubre la palabra secreta y libérate de tu ejecución!</li>
+            </ul>
+          </div>
+          <div class="col-span-2 py-2 px-4 bg-slate-100 border border-black shadow-lg rounded-lg">
+            <p class="text-center text-lg font-medium">También puedes agregar una palabra:</p>
+            <ul>
+              <li>1. Agrega una palabra y sorprende a tus amigos con sus decisiones.</li>
+              <li>2. Puedes agregar la palabra de hasta 8 carácteres.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!--ACTION BUTTONS-->
+        <div class="mt-5 flex items-center justify-center">
+          <div
+            class="mr-5 px-6 py-3 flex items-center justify-center text-white bg-cyan-600 transition duration-300 ease-in-out hover:bg-cyan-700 hover:scale-105 shadow-lg rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+            </svg>
+            <input id="start" class="ml-4 text-lg font-bold cursor-pointer btn btn-primary" type="button"
+              value="Iniciar Juego" />
+          </div>
+          <div
+            class="ml-5 px-6 py-3 flex items-center justify-center text-white bg-orange-600 transition duration-300 ease-in-out hover:bg-orange-700 hover:scale-105 shadow-lg rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <input id="add" class="ml-4 text-lg font-bold cursor-pointer btn btn-secondary" type="button"
+              value="Agregar Palabra" />
+          </div>
+        </div>
+      </section>
+
+      <!--GAME-->
+      <section id="juego" class="no-display">
+        <!--MAIN GAME-->
+        <div class="flex flex-col items-center justify-center">
+          <!--Estas clases se insertan dinámicamente-->
+          <div class="state-nodisplay"></div>
+
+          <!--TITLE-->
+          <h1 class="font-bold text-4xl underline">¡Que empiece el juego!</h1>
+
+          <!--FINAL WORD-->
+          <p id="final-word" class="mt-5 px-10 py-3 bg-yellow-400 text-lg font-bold rounded-lg hidden"></p>
+
+          <!--Estas clases se insertan dinámicamente-->
+          <div class="mt-3 p-5 flex flex-col items-center justify-center border-2 border-black shadow-2xl rounded-xl">
+            <canvas class="ahorcado" width="355" height="354"></canvas>
+            <div class="correctas"></div>
+          </div>
+        </div>
+
+        <!--KEYBOARD-->
+        <div class="mt-5 flex flex-col items-center">
+          <!--Estas clases se insertan dinámicamente-->
+          <div class="fila1"></div>
+          <div class="fila2"></div>
+          <div class="fila3"></div>
+        </div>
+
+        <!--ACTION BUTTONS-->
+        <div class="mt-5 flex items-center justify-center">
+          <div
+            class="mr-5 px-6 py-3 flex items-center justify-center text-white bg-green-600 transition duration-300 ease-in-out hover:bg-green-700 hover:scale-105 shadow-lg rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+            </svg>
+            <input id="new" class="ml-4 text-lg font-bold cursor-pointer btn btn-primary" type="button"
+              value="Nuevo Juego" />
+          </div>
+          <div
+            class="ml-5 px-6 py-3 flex items-center justify-center text-white bg-red-600 transition duration-300 ease-in-out hover:bg-red-700 hover:scale-105 shadow-lg rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+            </svg>
+            <input id="des" class="ml-4 text-lg font-bold cursor-pointer btn btn-secondary" type="button"
+              value="Desistir" />
+          </div>
+        </div>
+      </section>
+
+      <!--ADD WORD-->
+      <section id="addWord" class="no-display">
+        <form class="addWord_form">
+          <!--TITLE-->
+          <h1 class="font-bold text-4xl underline">Crea una nueva palabra</h1>
+
+          <!--NEW WORD-->
+          <div class="mt-5 relative z-0 group rounded-xl">
+            <input
+              class="w-full h-full block py-3 px-4 text-sm bg-transparent border-2 appearance-none focus:outline-none focus:ring-0 peer rounded-xl"
+              name="text_in_area" id="texto" placeholder=" " rows="4"></input>
+            <label
+              class="bg-white flex ml-3 px-2 peer-focus:font-medium absolute text-sm border duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:left-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rounded-xl">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+              <p className="ml-2">Ingrese el texto aquí</p>
+            </label>
+          </div>
+
+          <!--INFORMATION-->
+          <div class="mt-5 flex items-center justify-start">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p class="ml-2 font-semibold text-sm">Máx. 8 letras mayúsculas</p>
+          </div>
+
+          <!--ACTION BUTTONS-->
+          <div class="mt-3 flex items-center justify-center">
+            <div
+              class="mr-5 px-6 py-3 flex items-center justify-center text-white bg-green-600 transition duration-300 ease-in-out hover:bg-green-700 hover:scale-105 shadow-lg rounded-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              </svg>
+              <input id="save" class="ml-4 text-lg font-bold cursor-pointer btn btn-primary" type="button"
+                value="Guardar y empezar" />
+            </div>
+            <div
+              class="ml-5 px-6 py-3 flex items-center justify-center text-white bg-red-600 transition duration-300 ease-in-out hover:bg-red-700 hover:scale-105 shadow-lg rounded-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+              </svg>
+              <input id="cancel" class="ml-4 text-lg font-bold cursor-pointer btn btn-secondary" type="button"
+                value="Cancelar" />
+            </div>
+          </div>
+
+          <!--VALIDATION MODAL-->
+          <dialog id="dialog" class="dialog">
+            <input type="button" value="x" />
+            <p>Solo se admiten letras mayúsculas sin acentos.</p>
+          </dialog>
+          <dialog id="dialog2" class="dialog">
+            <input type="button" value="x" />
+            <p>La palabra debe tener como máximo 8 letras y como mínimo 1 letra.</p>
+          </dialog>
+        </form>
+      </section>
+    </main>
+
+    <!--FOOTER-->
+    <footer class="px-10 py-5 col-span-2 bg-white flex items-center justify-between shadow-2xl rounded-xl">
+      <div class="flex flex-col items-center justify-center">
+        <a href="mailto:elady1464@gmail.com"><b>Realizado por:</b> &copy;Lady Cristina Espinoza Aguedo</a>
+        <svg xmlns="http://www.w3.org/2000/svg" width="220" height="55" fill="none">
+          <rect id="backgroundrect" width="100%" height="100%" x="0" y="0" fill="none" stroke="none" />
+          <g class="currentLayer">
+            <title>Layer 1</title>
+            <path
+              d="M52.52 35.21h8.038l-4.244-6.854-7.796 12.383h-3.56l9.495-14.851a2.234 2.234 0 0 1 1.861-.963c.742 0 1.427.35 1.834.942l9.522 14.879h-3.552l-1.676-2.768h-8.146l-1.776-2.767Zm36.877 2.761V25.068H86.38V39.24c0 .385.164.763.449 1.041.285.3.685.464 1.099.464h13.73l1.791-2.768H89.397v-.007Zm-49.845-2.31a5.292 5.292 0 0 0 5.293-5.3c0-2.925-2.361-5.3-5.293-5.3H26.37v15.67h3.01V27.836h9.972a2.527 2.527 0 0 1 2.533 2.525 2.545 2.545 0 0 1-2.533 2.547l-8.495-.007 9.002 7.839h4.372l-6.041-5.072h1.362v-.007ZM7.839 40.738h9.109a7.82 7.82 0 0 0 7.825-7.832c0-4.33-3.488-7.84-7.825-7.84H7.839c-4.33 0-7.839 3.51-7.839 7.84s3.51 7.832 7.84 7.832Zm8.895-2.76H8.032a5.072 5.072 0 0 1-5.065-5.072 5.062 5.062 0 0 1 5.065-5.072h8.702a5.06 5.06 0 0 1 5.071 5.072 5.064 5.064 0 0 1-5.071 5.071Zm57.213 2.76h9.301l1.762-2.76H74.16a5.075 5.075 0 0 1-5.078-5.072 5.066 5.066 0 0 1 5.079-5.072h8.83l1.784-2.767h-10.82c-4.33 0-7.847 3.51-7.847 7.839-.007 4.33 3.51 7.832 7.839 7.832Zm36.849-2.76a5.066 5.066 0 0 1-4.879-3.688h12.875l1.776-2.76h-14.651a5.058 5.058 0 0 1 4.879-3.689h8.837l1.769-2.767h-10.806c-4.323 0-7.832 3.51-7.832 7.839a7.83 7.83 0 0 0 7.832 7.832h9.301l1.769-2.76h-10.87"
+              fill="#000000" id="svg_1" fill-opacity="1" />
+            <path d="M140.968 26.994h-1.355v11.605h1.355V26.994Z" id="svg_2" class="selected" fill-opacity="1" />
+            <path
+              d="M146.094 33.47v-1.354h-11.605v1.355h11.605ZM175.135 7h2.717c.143 0 .264.121.264.264v27.29a.268.268 0 0 1-.264.264h-2.717a.268.268 0 0 1-.264-.264V7.264c0-.143.121-.264.264-.264Zm18.716 22.454v.692c0 .307-.05.714-.164 1.241-.092.5-.356 1.028-.806 1.527-.428.5-1.07.956-1.954 1.334-.885.356-2.069.549-3.595.549-1.527 0-2.718-.193-3.595-.55-.885-.356-1.498-.805-1.955-1.333-.428-.5-.713-1.027-.806-1.548-.092-.52-.164-.906-.164-1.213V14.597c0-.143.122-.264.264-.264h2.718c.143 0 .264.12.264.264v14.55c0 .479.071.835.143 1.1.071.285.213.548.406.784.214.264.521.45.956.62.406.164.977.264 1.69.264.735 0 1.334-.092 1.762-.264.428-.164.763-.356.977-.592a1.6 1.6 0 0 0 .45-.763c.071-.285.164-.5.164-1.17v-14.53c0-.142.121-.263.264-.263h2.717c.143 0 .264.12.264.264v14.857Zm9.28-15.093h1.833c.164 0 .286.164.236.307l-.621 2.382c-.021.122-.142.193-.235.193h-1.284c-.692 0-1.241.093-1.669.285-.407.193-.763.378-.977.642-.214.264-.357.5-.428.763-.072.286-.093.521-.093.764V34.554a.268.268 0 0 1-.264.264h-2.739a.268.268 0 0 1-.264-.264V19.026c0-.285.05-.692.164-1.212.093-.521.357-1.028.806-1.548.428-.5 1.07-.956 1.955-1.334.848-.385 2.061-.57 3.58-.57Zm-37.455 0c2.212 0 3.859.428 4.908 1.313 1.027.884 1.548 1.975 1.548 3.288V30.146c0 .45-.093.956-.264 1.498-.164.55-.478 1.049-.956 1.498-.478.45-1.141.835-1.976 1.141-.834.307-1.926.45-3.26.45-1.355 0-2.425-.164-3.259-.45-.835-.285-1.498-.691-1.976-1.14-.478-.45-.813-.957-.956-1.499-.164-.549-.264-1.048-.264-1.498v-1.783c0-.956.264-1.833.735-2.618a3.968 3.968 0 0 1 2.097-1.669c.449-.164.956-.306 1.548-.52.57-.215 1.141-.379 1.69-.593.549-.192.999-.356 1.427-.499.406-.164.663-.235.763-.285.093-.05.235-.121.378-.214.164-.093.307-.235.478-.378.164-.193.285-.378.378-.592.121-.236.164-.5.164-.806v-.713c0-.264-.05-.5-.164-.785-.093-.285-.285-.5-.521-.735-.235-.235-.592-.406-.998-.55-.407-.142-.928-.213-1.57-.213-1.262 0-2.097.264-2.575.785-.378.449-.62.998-.663 1.64 0 .143-.121.236-.264.236h-2.668a.268.268 0 0 1-.263-.264v-.664c0-.642.121-1.24.356-1.783.236-.55.621-1.049 1.17-1.477a5.477 5.477 0 0 1 2.026-.977c.813-.185 1.79-.328 2.931-.328Zm3.267 10.043c-.05.264-.192.428-.378.571a2.517 2.517 0 0 1-.57.285c-.379.143-.814.286-1.242.428a21.63 21.63 0 0 1-1.241.428c-.449.164-.906.307-1.284.45a5.13 5.13 0 0 0-.884.52c-.236.214-.428.45-.621.785-.192.335-.285.713-.285 1.191 0 .956.235 1.67.692 2.14.449.45 1.312.713 2.546.713 1.263 0 2.119-.264 2.597-.734.449-.5.692-1.192.692-2.098l-.022-4.679Zm43.953-10.043c2.211 0 3.859.428 4.908 1.313 1.027.884 1.548 1.975 1.548 3.288V30.146c0 .45-.093.956-.264 1.498-.164.55-.478 1.049-.956 1.498-.478.45-1.141.835-1.976 1.141-.835.307-1.926.45-3.26.45-1.355 0-2.432-.164-3.26-.45-.834-.285-1.497-.691-1.975-1.14-.478-.45-.806-.957-.956-1.499-.164-.549-.264-1.048-.264-1.498v-1.783c0-.956.264-1.833.735-2.618a3.968 3.968 0 0 1 2.097-1.669c.449-.164.956-.306 1.548-.52.57-.215 1.141-.379 1.69-.593.549-.192.999-.356 1.427-.499.406-.164.663-.235.763-.285.093-.05.235-.121.378-.214.164-.093.307-.235.478-.378.164-.193.285-.378.378-.592.121-.236.164-.5.164-.806v-.713c0-.264-.05-.5-.164-.785-.093-.285-.285-.5-.521-.735-.264-.235-.592-.406-.998-.55-.407-.142-.928-.213-1.57-.213-1.262 0-2.097.264-2.575.785-.378.449-.62.998-.663 1.64 0 .143-.121.236-.264.236h-2.739a.268.268 0 0 1-.264-.264v-.664c0-.642.121-1.24.357-1.783.235-.55.62-1.049 1.17-1.477a5.472 5.472 0 0 1 2.025-.977 14.326 14.326 0 0 1 3.003-.328Zm3.239 10.043c-.05.264-.193.428-.378.571a2.523 2.523 0 0 1-.571.285c-.378.143-.806.286-1.241.428a21.63 21.63 0 0 1-1.241.428c-.45.164-.906.307-1.284.45a5.138 5.138 0 0 0-.885.52c-.235.214-.428.45-.62.785-.193.307-.286.713-.286 1.191 0 .956.236 1.67.692 2.14.45.45 1.313.713 2.547.713 1.262 0 2.118-.264 2.596-.734.449-.5.692-1.192.692-2.098l-.021-4.679ZM179.264 38.934c0-.128.107-.25.25-.25h1.562c.129 0 .25.122.25.25v7.005h3.124c.143 0 .25.12.25.25v1.426c0 .128-.107.25-.25.25h-4.929a.252.252 0 0 1-.249-.25v-8.68h-.008ZM185.22 47.522l4.109-8.823c.043-.079.128-.143.221-.143h.128c.093 0 .186.064.222.143l4.108 8.823c.079.171-.028.343-.221.343h-1.455c-.236 0-.343-.079-.457-.329l-.47-1.034h-3.567l-.471 1.049a.483.483 0 0 1-.47.313h-1.441c-.214 0-.314-.17-.236-.342Zm5.386-2.803-.999-2.161h-.014l-.985 2.16h1.998ZM195.791 40.61h-1.876a.252.252 0 0 1-.249-.25v-1.426c0-.128.107-.25.249-.25h5.821c.143 0 .25.122.25.25v1.427c0 .128-.107.25-.25.25h-1.876v7.004c0 .128-.121.25-.25.25h-1.576a.263.263 0 0 1-.25-.25V40.61h.007ZM199.643 47.522l4.109-8.823c.043-.079.128-.143.221-.143h.128c.093 0 .186.064.221.143l4.109 8.823c.078.171-.029.343-.221.343h-1.455c-.236 0-.343-.079-.457-.329l-.471-1.034h-3.566l-.471 1.049a.483.483 0 0 1-.471.313h-1.44c-.207 0-.314-.17-.236-.342Zm5.393-2.803-.999-2.161h-.014l-.985 2.16h1.998ZM210.414 38.763a.243.243 0 0 1 .235-.207h.207c.064 0 .186.05.221.128l3.046 5.664h.029l3.045-5.664a.292.292 0 0 1 .221-.128h.207c.107 0 .221.093.236.207l1.483 8.816c.029.171-.092.285-.249.285h-1.548c-.121 0-.236-.106-.25-.206l-.592-4.052h-.028l-2.204 4.251a.311.311 0 0 1-.222.143h-.235a.277.277 0 0 1-.221-.143l-2.218-4.25h-.029l-.578 4.05a.254.254 0 0 1-.249.208h-1.548c-.157 0-.278-.122-.25-.286l1.491-8.816Z"
+              fill="#000000" id="svg_3" fill-opacity="1" />
+          </g>
+        </svg>
+      </div>
+
+      <div class="flex items-center justify-center">
+        <a class="px-6 py-3 flex items-center justify-center bg-blue-700 transition duration-300 ease-in-out hover:bg-blue-800 hover:scale-105 shadow-lg rounded-lg"
+          href="https://www.linkedin.com/in/lady-espinoza-aguedo-4b555120b" target="_blank">
+          <img class="h-6" src="./assets/img/linkedin.png" alt="LinkedIn">
+          <p class="ml-4 text-white text-xl font-semibold">LinkedIn</p>
+        </a>
+        <a class="ml-4 px-6 py-3 flex items-center justify-center bg-gray-800 transition duration-300 ease-in-out hover:bg-gray-900 hover:scale-105 shadow-lg rounded-lg"
+          href="https://github.com/EladyC" target="_blank">
+          <img class="h-6" src="./assets/img/github.png" alt="GitHub">
+          <p class="ml-4 text-white text-xl font-semibold">Github</p>
+        </a>
+      </div>
+    </footer>
+  </div>
+</body>
+<script src="hangman.js"></script>
+
+</html>
